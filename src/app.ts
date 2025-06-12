@@ -1,4 +1,5 @@
 import express from 'express';
+import { fileURLToPath } from 'url';
 import { ProductService } from './services/productService';
 import { CartService } from './services/cartService';
 import { PaymentService } from './services/paymentService';
@@ -32,7 +33,7 @@ app.get('/shipping', shippingController.getOptions);
 
 export default app;
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const port = process.env.PORT || 3000;
   app.listen(port, () => console.log(`Server running on port ${port}`));
 }
