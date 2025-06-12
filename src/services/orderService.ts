@@ -39,8 +39,8 @@ export class OrderService {
       order.status = 'paid';
       await this.shippingService.shipOrder(order.id, shippingMethod);
       order.status = 'shipped';
+      this.cartService.clear();
     }
-    this.cartService.clear();
     return order;
   }
 }
