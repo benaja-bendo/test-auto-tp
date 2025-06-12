@@ -7,6 +7,7 @@ import { OrderService } from './services/orderService';
 import { ProductController } from './controllers/productController';
 import { CartController } from './controllers/cartController';
 import { OrderController } from './controllers/orderController';
+import { ShippingController } from './controllers/shippingController';
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ const orderService = new OrderService(cartService, paymentService, shippingServi
 const productController = new ProductController(productService);
 const cartController = new CartController(cartService);
 const orderController = new OrderController(orderService);
+const shippingController = new ShippingController(shippingService);
 
 app.locals.cartService = cartService;
 
@@ -26,6 +28,7 @@ app.get('/products', productController.getProducts);
 app.post('/cart/items', cartController.addItem);
 app.get('/cart', cartController.getCart);
 app.post('/orders', orderController.createOrder);
+app.get('/shipping', shippingController.getOptions);
 
 export default app;
 

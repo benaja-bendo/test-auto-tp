@@ -15,15 +15,19 @@ describe('OrderService', () => {
   beforeEach(() => {
     cart = new CartService();
     payment = { processPayment: vi.fn().mockResolvedValue(true) } as unknown as PaymentService;
-    shipping = { shipOrder: vi.fn().mockResolvedValue(undefined) } as unknown as ShippingService;
+    shipping = {
+      shipOrder: vi.fn().mockResolvedValue(undefined),
+      getCost: vi.fn().mockReturnValue(5)
+    } as unknown as ShippingService;
     productService = new ProductService();
     service = new OrderService(cart, payment, shipping, productService);
   });
 
   it('creates order from cart', async () => {
     cart.addItem('1', 1);
-    const order = await service.createOrder();
+    const order = await service.createOrder('standard');
     expect(order.status).toBe('shipped');
+    expect(order.shippingCost).toBe(5);
     expect((payment.processPayment as any).mock.calls[0][1]).toBe(order.total);
   });
 });

@@ -25,4 +25,4 @@ test/
   e2e/             End to end scenarios
 ```
 
-The services contain simple in-memory logic to keep the example concise. Payment and shipping are simulated via asynchronous services.
+The services contain simple in-memory logic to keep the example concise. Payment and shipping are simulated via asynchronous services. A list of shipping options is exposed via `/shipping` and orders must specify a `shippingMethod` when created. The `ProductService` can optionally fetch products from an external `json-server` API when `PRODUCT_API_URL` is set.

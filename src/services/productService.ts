@@ -6,8 +6,21 @@ const products: Product[] = [
 ];
 
 export class ProductService {
+  constructor(private apiUrl: string | undefined = process.env.PRODUCT_API_URL) {}
+
   getAll(): Product[] {
     return products;
+  }
+
+  async fetchAll(): Promise<Product[]> {
+    if (!this.apiUrl) {
+      return Promise.resolve(products);
+    }
+    const res = await fetch(`${this.apiUrl}/products`);
+    if (!res.ok) {
+      throw new Error('Failed to fetch products');
+    }
+    return res.json();
   }
 
   findById(id: string): Product | undefined {

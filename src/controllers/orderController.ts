@@ -5,7 +5,8 @@ export class OrderController {
   constructor(private orderService: OrderService) {}
 
   createOrder = async (req: Request, res: Response): Promise<void> => {
-    const order = await this.orderService.createOrder();
+    const { shippingMethod } = req.body;
+    const order = await this.orderService.createOrder(shippingMethod);
     res.status(201).json(order);
   };
 }
