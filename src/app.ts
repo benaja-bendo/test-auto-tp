@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import { ProductService } from './services/productService';
 import { CartService } from './services/cartService';
@@ -9,9 +10,15 @@ import { ProductController } from './controllers/productController';
 import { CartController } from './controllers/cartController';
 import { OrderController } from './controllers/orderController';
 import { ShippingController } from './controllers/shippingController';
+import { SiteController } from './controllers/siteController';
+import { registerRoutes } from './routes/index.route';
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const productService = new ProductService();
 const cartService = new CartService();
@@ -22,18 +29,16 @@ const productController = new ProductController(productService);
 const cartController = new CartController(cartService);
 const orderController = new OrderController(orderService);
 const shippingController = new ShippingController(shippingService);
+const siteController = new SiteController(productService, cartService, orderService);
 
 app.locals.cartService = cartService;
 
-app.get('/products', productController.getProducts);
-app.post('/cart/items', cartController.addItem);
-app.get('/cart', cartController.getCart);
-app.post('/orders', orderController.createOrder);
-app.get('/shipping', shippingController.getOptions);
+registerRoutes(app, {
+  product: productController,
+  cart: cartController,
+  order: orderController,
+  shipping: shippingController,
+  site: siteController
+});
 
 export default app;
-
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => console.log(`Server running on port ${port}`));
-}
