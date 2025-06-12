@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../../src/app';
-import { afterEach } from 'vitest';
+import { afterEach, describe, it, expect } from 'vitest';
 import { CartService } from '../../src/services/cartService';
 
 // Access cartService for cleanup
@@ -25,8 +25,9 @@ describe('API', () => {
     const cartRes = await request(app).get('/cart');
     expect(cartRes.body.length).toBe(1);
 
-    const orderRes = await request(app).post('/orders');
+    const orderRes = await request(app).post('/orders').send({ shippingMethod: 'standard' });
     expect(orderRes.status).toBe(201);
+    expect(orderRes.body.shippingCost).toBe(5);
     expect(orderRes.body.status).toBe('shipped');
   });
 });
