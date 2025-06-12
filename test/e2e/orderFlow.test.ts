@@ -1,5 +1,6 @@
 import request from 'supertest';
 import app from '../../src/app';
+import { describe, it, expect } from 'vitest';
 
 describe('Order flow E2E', () => {
   it('user can browse, add to cart and order', async () => {
