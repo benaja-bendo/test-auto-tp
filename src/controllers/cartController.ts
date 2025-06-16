@@ -5,9 +5,14 @@ export class CartController {
   constructor(private cartService: CartService) {}
 
   addItem = (req: Request, res: Response): void => {
-    const { productId, quantity } = req.body;
-    this.cartService.addItem(productId, quantity);
-    res.status(201).end();
+    const { productId, quantity } = req.body as any;
+    const qty = Number(quantity) || 1;
+    this.cartService.addItem(productId, qty);
+    if (req.is('application/json')) {
+      res.status(201).end();
+    } else {
+      res.redirect('/cart');
+    }
   };
 
   getCart = (req: Request, res: Response): void => {

@@ -14,10 +14,15 @@ This project provides a small example of a Node.js backend written in TypeScript
 ## Project Structure
 ```
 src/
-  controllers/     Express route handlers
+  config/          Environment handling
+  server.ts        Application entry point
+  app.ts           Express instance
+  routes/          Route definitions
+  controllers/     Express handlers
   services/        Business logic
   models/          Type definitions
-  app.ts           Express application
+  views/           Static HTML pages
+  public/          Browser JS and CSS
 
 test/
   unit/            Unit tests for services
