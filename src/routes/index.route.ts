@@ -18,6 +18,7 @@ export function registerRoutes(app: Express,
   api.get('/products/:id', controllers.product.getProduct);
   api.post('/cart/items', controllers.cart.addItem);
   api.get('/cart', controllers.cart.getCart);
+  api.delete('/cart', controllers.cart.clearCart);
   api.post('/orders', controllers.order.createOrder);
   api.get('/shipping', controllers.shipping.getOptions);
   app.use('/api', api);
