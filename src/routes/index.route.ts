@@ -42,11 +42,14 @@ export class Routes {
     router.get('/api/payments/:id', this.paymentController.getPaymentById);
 
     // Cart routes
-    router.get('/cart/items', this.cartController.getItems);
-    router.post('/cart/items', this.cartController.addItem);
-    router.put('/cart/items', this.cartController.updateItem);
-    router.delete('/cart/items/:productId', this.cartController.removeItem);
-    router.post('/cart/clear', this.cartController.clearCart);
+    router.get('/api/cart/items', this.cartController.getItems);
+    router.post('/api/cart/items', this.cartController.addItem);
+    router.put('/api/cart/items', this.cartController.updateItem);
+    router.delete('/api/cart/items/:productId', this.cartController.removeItem);
+    router.post('/api/cart/clear', this.cartController.clearCart);
+
+    // Order routes
+    router.post('/api/orders', this.orderController.createOrder);
 
     // Order routes
     router.post('/api/orders', this.orderController.createOrder);

@@ -29,7 +29,7 @@ describe('Tests End-to-End', () => {
     expect(addToCart.status).toBe(201);
 
     // 4. Vérifier le contenu du panier
-    const cart = await request(app).get('/api/cart');
+    const cart = await request(app).get('/api/cart/items');
     expect(cart.status).toBe(200);
     expect(cart.body).toHaveLength(1);
     expect(cart.body[0].quantity).toBe(2);
@@ -59,7 +59,7 @@ describe('Tests End-to-End', () => {
       .send({ productId: product2, quantity: 1 });
 
     // 3. Vérifier le panier
-    const cart = await request(app).get('/api/cart');
+    const cart = await request(app).get('/api/cart/items');
     expect(cart.body).toHaveLength(2);
 
     // 4. Commander
@@ -85,11 +85,11 @@ describe('Tests End-to-End', () => {
       .send({ productId, quantity: 3 });
 
     // 3. Vérifier la mise à jour
-    const cart = await request(app).get('/api/cart');
+    const cart = await request(app).get('/api/cart/items');
     expect(cart.body[0].quantity).toBe(4);
   });
 
-  /*it('gestion des erreurs de commande', async () => {
+  it('gestion des erreurs de commande', async () => {
     // 1. Tenter de commander avec un panier vide
     const emptyOrder = await request(app)
       .post('/api/orders')
@@ -102,7 +102,7 @@ describe('Tests End-to-End', () => {
       .send({ productId: 'invalid', quantity: 1 });
     expect(invalidProduct.status).toBe(400);
     expect(invalidProduct.body.error).toBe('Produit non trouvé');
-  });*/
+  });
 
   it('vérification du total de la commande', async () => {
     // 1. Ajouter des produits

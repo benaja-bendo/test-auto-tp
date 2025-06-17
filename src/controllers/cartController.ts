@@ -8,21 +8,36 @@ export class CartController {
     private productService: ProductService
   ) {}
 
-  addItem = (req: Request, res: Response): void => {
-    const { productId, quantity } = req.body as any;
-    const qty = Number(quantity) || 1;
-    const product = this.productService.findById(productId);
-    
-    if (!product) {
-      res.status(400).json({ error: 'Produit non trouvé' });
-      return;
-    }
+  addItem = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { productId, quantity } = req.body as any;
+      const qty = Number(quantity) || 1;
+      const product = await this.productService.findById(productId);
+      
+      if (!product) {
+        res.status(400).json({ error: 'Produit non trouvé' });
+        return;
+      }
 
-    this.cartService.addItem(productId, qty);
-    if (req.is('application/json')) {
-      res.status(201).end();
-    } else {
-      res.redirect('/cart');
+      this.cartService.addItem(productId, qty);
+      const items = await Promise.all(
+        this.cartService.getItems().map(async (item) => {
+          const product = await this.productService.findById(item.productId);
+          return {
+            ...item,
+            product
+          };
+        })
+      );
+
+      if (req.is('application/json')) {
+        res.status(201).json(items);
+      } else {
+        res.redirect('/cart');
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+      res.status(500).json({ error: 'Erreur lors de l\'ajout au panier' });
     }
   };
 
@@ -51,11 +66,26 @@ export class CartController {
     res.status(200).json({ success: true });
   };
 
-  getItems = (req: Request, res: Response): void => {
-    res.json(this.cartService.getItems());
+  getItems = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const items = this.cartService.getItems();
+      const itemsWithProducts = await Promise.all(
+        items.map(async (item) => {
+          const product = await this.productService.findById(item.productId);
+          return {
+            ...item,
+            product
+          };
+        })
+      );
+      res.json(itemsWithProducts);
+    } catch (error) {
+      console.error('Error getting cart items:', error);
+      res.status(500).json({ error: 'Erreur lors de la récupération du panier' });
+    }
   };
 
-  clearCart = (req: Request, res: Response): void => {
+  emptyCart = (req: Request, res: Response): void => {
     this.cartService.clear();
     res.status(204).end();
   };

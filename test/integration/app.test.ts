@@ -42,7 +42,7 @@ describe('API Integration Tests', () => {
         .send({ productId, quantity: 2 });
       expect(res.status).toBe(201);
       
-      const cartRes = await request(app).get('/api/cart');
+      const cartRes = await request(app).get('/api/cart/items');
       expect(cartRes.body).toHaveLength(1);
       expect(cartRes.body[0].quantity).toBe(2);
     });
@@ -59,7 +59,7 @@ describe('API Integration Tests', () => {
         .post('/api/cart/items')
         .send({ productId, quantity: 3 });
       
-      const cartRes = await request(app).get('/api/cart');
+      const cartRes = await request(app).get('/api/cart/items');
       expect(cartRes.body).toHaveLength(1);
       expect(cartRes.body[0].quantity).toBe(5);
     });
@@ -72,9 +72,9 @@ describe('API Integration Tests', () => {
         .post('/api/cart/items')
         .send({ productId, quantity: 1 });
       
-      await request(app).delete('/api/cart');
+      await request(app).post('/api/cart/clear');
       
-      const cartRes = await request(app).get('/api/cart');
+      const cartRes = await request(app).get('/api/cart/items');
       expect(cartRes.body).toHaveLength(0);
     });
   });
@@ -103,7 +103,7 @@ describe('API Integration Tests', () => {
         .post('/api/orders')
         .send({ shippingMethod: 'standard' });
 
-      const cartRes = await request(app).get('/api/cart');
+      const cartRes = await request(app).get('/api/cart/items');
       expect(cartRes.body).toHaveLength(0);
     });
 

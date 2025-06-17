@@ -23,8 +23,14 @@ export class ProductService {
 
   async findById(id: string): Promise<Product | undefined> {
     try {
-      const products = await this.fetchAll();
-      return products.find(p => p.id === id);
+      const res = await fetch(`${this.apiUrl}/products/${id}`);
+      if (!res.ok) {
+        if (res.status === 404) {
+          return undefined;
+        }
+        throw new Error(`Failed to fetch product with id ${id}`);
+      }
+      return res.json();
     } catch (error) {
       console.error(`Error finding product with id ${id}:`, error);
       return undefined;

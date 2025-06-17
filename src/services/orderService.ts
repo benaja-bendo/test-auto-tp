@@ -13,6 +13,10 @@ export class OrderService {
     private productService: ProductService
   ) {}
 
+  getCartItems() {
+    return this.cartService.getItems();
+  }
+
   async createOrder(shippingMethod: string): Promise<Order> {
     const items = this.cartService.getItems();
     
