@@ -1,29 +1,32 @@
 import { Product } from '../models/product';
 
-const products: Product[] = [
-  { id: '1', name: 'Laptop', price: 1000 },
-  { id: '2', name: 'Phone', price: 800 }
-];
-
 export class ProductService {
-  constructor(private apiUrl: string | undefined = process.env.PRODUCT_API_URL) {}
+  constructor(private apiUrl: string = 'http://localhost:3001') {}
 
-  getAll(): Product[] {
-    return products;
+  async getAll(): Promise<Product[]> {
+    return this.fetchAll();
   }
 
   async fetchAll(): Promise<Product[]> {
-    if (!this.apiUrl) {
-      return Promise.resolve(products);
+    try {
+      const res = await fetch(`${this.apiUrl}/products`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      return res.json();
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      return [];
     }
-    const res = await fetch(`${this.apiUrl}/products`);
-    if (!res.ok) {
-      throw new Error('Failed to fetch products');
-    }
-    return res.json();
   }
 
-  findById(id: string): Product | undefined {
-    return products.find(p => p.id === id);
+  async findById(id: string): Promise<Product | undefined> {
+    try {
+      const products = await this.fetchAll();
+      return products.find(p => p.id === id);
+    } catch (error) {
+      console.error(`Error finding product with id ${id}:`, error);
+      return undefined;
+    }
   }
 }

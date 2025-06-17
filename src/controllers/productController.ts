@@ -4,16 +4,25 @@ import { ProductService } from '../services/productService';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
-  getProducts = (req: Request, res: Response): void => {
-    res.json(this.productService.getAll());
+  getProducts = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const products = await this.productService.getAll();
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch products' });
+    }
   };
 
-  getProduct = (req: Request, res: Response): void => {
-    const product = this.productService.findById(req.params.id);
-    if (!product) {
-      res.status(404).end();
-      return;
+  getProduct = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const product = await this.productService.findById(req.params.id);
+      if (!product) {
+        res.status(404).end();
+        return;
+      }
+      res.json(product);
+    } catch (error) {
+      res.status(500).json({ error: `Failed to fetch product with id ${req.params.id}` });
     }
-    res.json(product);
   };
 }
