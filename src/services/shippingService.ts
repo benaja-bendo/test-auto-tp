@@ -1,4 +1,5 @@
 import { Carrier } from '../models/carrier';
+import axios from 'axios';
 
 export interface ShippingOption {
   id: string;
@@ -11,13 +12,9 @@ const options: ShippingOption[] = [
   { id: 'express', name: 'Express', price: 10 }
 ];
 
-const carriers: Carrier[] = [
-  { id: 'trk001', name: 'Express Delivery', price: 10, deliveryTime: '1-2 days', description: 'Fast delivery service' },
-  { id: 'trk002', name: 'Standard Delivery', price: 5, deliveryTime: '3-5 days', description: 'Regular delivery service' },
-  { id: 'trk003', name: 'Economy Delivery', price: 3, deliveryTime: '5-7 days', description: 'Budget-friendly delivery option' }
-];
-
 export class ShippingService {
+  private apiUrl = 'http://localhost:3001/carriers';
+
   getOptions(): ShippingOption[] {
     return options;
   }
@@ -31,11 +28,40 @@ export class ShippingService {
     await new Promise(resolve => setTimeout(resolve, 50));
   }
 
-  getAllCarriers(): Carrier[] {
-    return carriers;
+  async getAllCarriers(): Promise<Carrier[]> {
+    try {
+      const response = await axios.get(this.apiUrl);
+      // Adapter les données du JSON server au format de notre modèle Carrier
+      return response.data.map((carrier: any) => ({
+        id: carrier.id,
+        name: carrier.name,
+        price: carrier['max-weight'] * 5, // Calcul du prix basé sur le poids max
+        deliveryTime: carrier.service_type,
+        description: carrier.features?.join(', ') || ''
+      }));
+    } catch (error) {
+      console.error('Erreur lors de la récupération des transporteurs:', error);
+      return [];
+    }
   }
 
-  getCarrierById(id: string): Carrier | undefined {
-    return carriers.find(carrier => carrier.id === id);
+  async getCarrierById(id: string): Promise<Carrier | undefined> {
+    try {
+      const response = await axios.get(`${this.apiUrl}/${id}`);
+      const carrier = response.data;
+      
+      if (!carrier) return undefined;
+      
+      return {
+        id: carrier.id,
+        name: carrier.name,
+        price: carrier['max-weight'] * 5, // Calcul du prix basé sur le poids max
+        deliveryTime: carrier.service_type,
+        description: carrier.features?.join(', ') || ''
+      };
+    } catch (error) {
+      console.error(`Erreur lors de la récupération du transporteur ${id}:`, error);
+      return undefined;
+    }
   }
 }
