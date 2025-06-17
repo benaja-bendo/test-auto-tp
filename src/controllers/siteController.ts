@@ -23,15 +23,17 @@ export class SiteController {
     res.sendFile(path.join(viewsDir, 'product.html'));
   };
 
-  cartPage = (req: Request, res: Response): void => {
+  cartPage = async (req: Request, res: Response): Promise<void> => {
     const items = this.cartService.getItems();
-    const rows = items
-      .map(i => {
-        const product = this.productService.findById(i.productId);
-        const name = product?.name ?? i.productId;
-        return `<li>${name} x ${i.quantity}</li>`;
-      })
-      .join('');
+    let rows = '';
+    
+    // Traiter les éléments du panier de manière asynchrone
+    for (const item of items) {
+      const product = await this.productService.findById(item.productId);
+      const name = product?.name ?? item.productId;
+      rows += `<li>${name} x ${item.quantity}</li>`;
+    }
+    
     res.send(
       `<h1>Cart</h1><ul>${rows}</ul>` +
         `<form method="post" action="/checkout">` +

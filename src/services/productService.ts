@@ -1,7 +1,8 @@
 import { Product } from '../models/product';
+import { env } from '../config/env';
 
 export class ProductService {
-  constructor(private apiUrl: string = 'http://localhost:3001') {}
+  constructor(private apiUrl: string = env.PRODUCT_API_URL || 'http://localhost:3001') {}
 
   async getAll(): Promise<Product[]> {
     return this.fetchAll();

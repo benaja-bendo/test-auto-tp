@@ -15,10 +15,15 @@ export class OrderService {
 
   async createOrder(shippingMethod: string): Promise<Order> {
     const items = this.cartService.getItems();
-    const itemsTotal = items.reduce((sum, item) => {
-      const product = this.productService.findById(item.productId);
-      return product ? sum + product.price * item.quantity : sum;
-    }, 0);
+    
+    // Calculer le total des articles de manière asynchrone
+    let itemsTotal = 0;
+    for (const item of items) {
+      const product = await this.productService.findById(item.productId);
+      if (product) {
+        itemsTotal += product.price * item.quantity;
+      }
+    }
 
     const shippingCost = this.shippingService.getCost(shippingMethod);
     const total = itemsTotal + shippingCost;
