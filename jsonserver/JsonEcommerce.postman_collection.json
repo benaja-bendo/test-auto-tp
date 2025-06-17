@@ -15,7 +15,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/products",
+					"raw": "http://localhost:3000/api/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -37,7 +37,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/products/e0a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c",
+					"raw": "http://localhost:3000/api/products/e0a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -69,7 +69,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/products/e0a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c",
+					"raw": "http://localhost:3000/api/products/e0a1b2c3-d4e5-6f7a-8b9c-0d1e2f3a4b5c",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,7 +92,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/carriers",
+					"raw": "http://localhost:3000/api/carriers",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -114,7 +114,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/carriers/trk001",
+					"raw": "http://localhost:3000/api/carriers/trk001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -137,7 +137,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/payments",
+					"raw": "http://localhost:3000/api/payments",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -159,7 +159,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/payments/pay001",
+					"raw": "http://localhost:3000/api/payments/pay001",
 					"protocol": "http",
 					"host": [
 						"localhost"

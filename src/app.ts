@@ -11,7 +11,7 @@ import { CartController } from './controllers/cartController';
 import { OrderController } from './controllers/orderController';
 import { ShippingController } from './controllers/shippingController';
 import { SiteController } from './controllers/siteController';
-import { registerRoutes } from './routes/index.route';
+import { Routes } from './routes/index.route';
 
 const app = express();
 app.use(express.json());
@@ -33,12 +33,15 @@ const siteController = new SiteController(productService, cartService, orderServ
 
 app.locals.cartService = cartService;
 
-registerRoutes(app, {
-  product: productController,
-  cart: cartController,
-  order: orderController,
-  shipping: shippingController,
-  site: siteController
-});
+// Initialiser les routes
+const routes = new Routes(
+  siteController,
+  productController,
+  cartController,
+  orderController
+);
+
+// Enregistrer les routes
+app.use(routes.init());
 
 export default app;

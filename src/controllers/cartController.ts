@@ -15,7 +15,32 @@ export class CartController {
     }
   };
 
-  getCart = (req: Request, res: Response): void => {
+  updateItem = (req: Request, res: Response): void => {
+    const { productId, quantity } = req.body as any;
+    const qty = Number(quantity) || 1;
+    
+    // Si la quantité est 0, supprimer l'élément
+    if (qty <= 0) {
+      this.cartService.removeItem(productId);
+    } else {
+      this.cartService.updateItem(productId, qty);
+    }
+    
+    res.status(200).json({ success: true });
+  };
+
+  removeItem = (req: Request, res: Response): void => {
+    const { productId } = req.params;
+    this.cartService.removeItem(productId);
+    res.status(200).json({ success: true });
+  };
+
+  clearCart = (req: Request, res: Response): void => {
+    this.cartService.clear();
+    res.status(200).json({ success: true });
+  };
+
+  getItems = (req: Request, res: Response): void => {
     res.json(this.cartService.getItems());
   };
 }

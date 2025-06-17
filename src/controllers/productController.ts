@@ -4,7 +4,7 @@ import { ProductService } from '../services/productService';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
-  getProducts = async (req: Request, res: Response): Promise<void> => {
+  getAll = async (req: Request, res: Response): Promise<void> => {
     try {
       const products = await this.productService.getAll();
       res.json(products);
@@ -13,7 +13,7 @@ export class ProductController {
     }
   };
 
-  getProduct = async (req: Request, res: Response): Promise<void> => {
+  getById = async (req: Request, res: Response): Promise<void> => {
     try {
       const product = await this.productService.findById(req.params.id);
       if (!product) {
