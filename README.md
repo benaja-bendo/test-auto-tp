@@ -1,33 +1,139 @@
-# E-commerce Backend Example
+# TP Auto EPSI - Backend E-commerce
 
-This project provides a small example of a Node.js backend written in TypeScript. It demonstrates a basic e-commerce workflow with an emphasis on code quality and automated tests.
+Une application backend e-commerce moderne développée avec Node.js et TypeScript, offrant une API RESTful complète et une interface utilisateur simple pour la gestion des produits, du panier et des commandes.
 
-## Requirements
+## 🚀 Fonctionnalités
+
+- **Catalogue de produits** : Affichage et recherche de produits avec pagination
+- **Gestion du panier** : Ajout, modification et suppression d'articles
+- **Processus de commande** : Paiement simulé et options d'expédition
+- **API RESTful** : Endpoints documentés pour l'intégration avec des frontends
+- **Interface utilisateur simple** : Pages HTML basiques pour tester les fonctionnalités
+
+## 🛠️ Technologies
+
+- **Backend** : Node.js, Express, TypeScript
+- **Tests** : Vitest, Supertest
+- **Données** : JSON Server (optionnel pour les données externes)
+
+## 📋 Prérequis
+
 - Node.js >= 18
-- pnpm or npm
+- npm ou pnpm
 
-## Scripts
-- `npm run dev` – start the server with tsx in watch mode
-- `npm run start` – run the server once
-- `npm test` – run all unit, integration and E2E tests
+## 🔧 Installation
 
-## Project Structure
+1. Clonez le dépôt :
+   ```bash
+   git clone [URL_DU_REPO]
+   cd tp-auto-epsi
+   ```
+
+2. Installez les dépendances :
+   ```bash
+   npm install
+   # ou avec pnpm
+   pnpm install
+   ```
+
+3. Configurez les variables d'environnement (optionnel) :
+   ```bash
+   cp .env.example .env
+   # Modifiez .env selon vos besoins
+   ```
+
+## 🚀 Démarrage
+
+### Application principale
+
+```bash
+# Mode développement avec rechargement automatique
+npm run dev
+
+# Démarrage simple
+npm start
+```
+
+L'application sera accessible à l'adresse : http://localhost:3000
+
+### Serveur JSON (optionnel)
+
+Pour utiliser le serveur JSON avec des données de produits plus complètes :
+
+```bash
+# Installation globale de json-server (si nécessaire)
+npm install -g json-server
+
+# Démarrage du serveur JSON
+json-server --watch jsonserver/data.json --port 3001
+```
+
+Ensuite, configurez l'application pour utiliser l'API externe :
+```bash
+# Dans .env
+PRODUCT_API_URL=http://localhost:3001
+```
+
+## 🧪 Tests
+
+```bash
+# Exécuter tous les tests
+npm test
+
+# Mode watch pour le développement
+npm run test:watch
+```
+
+## 📁 Structure du projet
+
 ```
 src/
-  config/          Environment handling
-  server.ts        Application entry point
-  app.ts           Express instance
-  routes/          Route definitions
-  controllers/     Express handlers
-  services/        Business logic
-  models/          Type definitions
-  views/           Static HTML pages
-  public/          Browser JS and CSS
+  ├── config/          # Configuration et variables d'environnement
+  ├── controllers/     # Contrôleurs Express
+  ├── middlewares/     # Middlewares Express
+  ├── models/          # Définitions de types et interfaces
+  ├── public/          # Fichiers statiques (JS, CSS)
+  ├── routes/          # Définitions des routes API
+  ├── services/        # Logique métier
+  ├── views/           # Pages HTML
+  ├── app.ts           # Configuration de l'application Express
+  └── server.ts        # Point d'entrée de l'application
 
 test/
-  unit/            Unit tests for services
-  integration/     API level integration tests
-  e2e/             End to end scenarios
+  ├── unit/            # Tests unitaires des services
+  ├── integration/     # Tests d'intégration de l'API
+  └── e2e/             # Tests end-to-end des scénarios utilisateur
+
+jsonserver/            # Données et configuration pour JSON Server
 ```
 
-The services contain simple in-memory logic to keep the example concise. Payment and shipping are simulated via asynchronous services. A list of shipping options is exposed via `/shipping` and orders must specify a `shippingMethod` when created. The `ProductService` can optionally fetch products from an external `json-server` API when `PRODUCT_API_URL` is set.
+## 📝 API Endpoints
+
+### Produits
+- `GET /api/products` - Liste tous les produits
+- `GET /api/products/:id` - Détails d'un produit spécifique
+
+### Panier
+- `GET /api/cart` - Affiche le contenu du panier
+- `POST /api/cart/items` - Ajoute un article au panier
+
+### Commandes
+- `POST /api/orders` - Crée une nouvelle commande
+
+### Expédition
+- `GET /api/shipping` - Liste les options d'expédition disponibles
+
+## 🔄 Flux de commande
+
+1. Parcourir les produits (`GET /api/products`)
+2. Ajouter des produits au panier (`POST /api/cart/items`)
+3. Créer une commande avec une méthode d'expédition (`POST /api/orders`)
+4. Le paiement est simulé et la commande est automatiquement expédiée
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
+
+## 📄 Licence
+
+Ce projet est sous licence [MIT](LICENSE).

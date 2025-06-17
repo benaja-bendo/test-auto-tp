@@ -1,12 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Product Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détail du Produit</title>
   <link rel="stylesheet" href="/main.css" />
 </head>
 <body>
-  <div id="product-detail"></div>
+  <div id="header-container"></div>
+  
+  <main class="container">
+    <div id="product-detail" class="product-detail">
+      <!-- Les détails du produit seront ajoutés ici dynamiquement -->
+    </div>
+    
+    <div class="product-actions">
+      <a href="/" class="button">Retour au catalogue</a>
+    </div>
+  </main>
+  
+  <script src="/cart.js"></script>
   <script src="/product.js"></script>
 </body>
 </html>

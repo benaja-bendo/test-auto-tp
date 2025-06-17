@@ -4,16 +4,41 @@ import { ProductService } from '../services/productService';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
-  getProducts = (req: Request, res: Response): void => {
-    res.json(this.productService.getAll());
+  getAll = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const products = await this.productService.getAll();
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch products' });
+    }
   };
 
-  getProduct = (req: Request, res: Response): void => {
-    const product = this.productService.findById(req.params.id);
-    if (!product) {
-      res.status(404).end();
-      return;
+  getById = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const product = await this.productService.findById(req.params.id);
+      if (!product) {
+        res.status(404).end();
+        return;
+      }
+      res.json(product);
+    } catch (error) {
+      res.status(500).json({ error: `Failed to fetch product with id ${req.params.id}` });
     }
-    res.json(product);
+  };
+
+  updateProduct = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const updates = req.body;
+      const updatedProduct = await this.productService.updateProduct(req.params.id, updates);
+      
+      if (!updatedProduct) {
+        res.status(404).json({ error: `Product with id ${req.params.id} not found` });
+        return;
+      }
+      
+      res.json(updatedProduct);
+    } catch (error) {
+      res.status(500).json({ error: `Failed to update product with id ${req.params.id}` });
+    }
   };
 }

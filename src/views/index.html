@@ -1,14 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue de Produits</title>
   <link rel="stylesheet" href="/main.css" />
 </head>
 <body>
-  <h1>Catalogue</h1>
-  <ul id="product-list"></ul>
-  <div id="pagination"></div>
+  <div id="header-container"></div>
+  
+  <main class="container">
+    <h1>Catalogue de Produits</h1>
+    
+    <div class="filters">
+      <div class="filter-group">
+        <input type="text" id="search-input" placeholder="Rechercher un produit..." class="search-input">
+        <select id="category-filter" class="category-filter">
+          <option value="">Toutes les catégories</option>
+          <!-- Les catégories seront ajoutées dynamiquement -->
+        </select>
+      </div>
+    </div>
+    
+    <div id="product-grid" class="product-grid">
+      <!-- Les produits seront ajoutés ici dynamiquement -->
+    </div>
+    
+    <div id="pagination" class="pagination"></div>
+  </main>
+  
+  <script src="/cart.js"></script>
   <script src="/index.js"></script>
 </body>
 </html>
