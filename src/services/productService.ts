@@ -30,4 +30,25 @@ export class ProductService {
       return undefined;
     }
   }
+
+  async updateProduct(id: string, updates: Partial<Product>): Promise<Product | undefined> {
+    try {
+      const res = await fetch(`${this.apiUrl}/products/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updates)
+      });
+      
+      if (!res.ok) {
+        throw new Error(`Failed to update product with id ${id}`);
+      }
+      
+      return res.json();
+    } catch (error) {
+      console.error(`Error updating product with id ${id}:`, error);
+      return undefined;
+    }
+  }
 }

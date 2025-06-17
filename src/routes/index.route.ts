@@ -3,13 +3,17 @@ import { SiteController } from '../controllers/siteController';
 import { ProductController } from '../controllers/productController';
 import { CartController } from '../controllers/cartController';
 import { OrderController } from '../controllers/orderController';
+import { ShippingController } from '../controllers/shippingController';
+import { PaymentController } from '../controllers/paymentController';
 
 export class Routes {
   constructor(
     private siteController: SiteController,
     private productController: ProductController,
     private cartController: CartController,
-    private orderController: OrderController
+    private orderController: OrderController,
+    private shippingController: ShippingController,
+    private paymentController: PaymentController
   ) {}
 
   public init(): Router {
@@ -27,6 +31,15 @@ export class Routes {
     // API routes
     router.get('/api/products', this.productController.getAll);
     router.get('/api/products/:id', this.productController.getById);
+    router.patch('/api/products/:id', this.productController.updateProduct);
+
+    // Carriers routes
+    router.get('/api/carriers', this.shippingController.getAllCarriers);
+    router.get('/api/carriers/:id', this.shippingController.getCarrierById);
+
+    // Payments routes
+    router.get('/api/payments', this.paymentController.getAllPayments);
+    router.get('/api/payments/:id', this.paymentController.getPaymentById);
 
     // Cart routes
     router.get('/cart/items', this.cartController.getItems);

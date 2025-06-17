@@ -25,4 +25,20 @@ export class ProductController {
       res.status(500).json({ error: `Failed to fetch product with id ${req.params.id}` });
     }
   };
+
+  updateProduct = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const updates = req.body;
+      const updatedProduct = await this.productService.updateProduct(req.params.id, updates);
+      
+      if (!updatedProduct) {
+        res.status(404).json({ error: `Product with id ${req.params.id} not found` });
+        return;
+      }
+      
+      res.json(updatedProduct);
+    } catch (error) {
+      res.status(500).json({ error: `Failed to update product with id ${req.params.id}` });
+    }
+  };
 }

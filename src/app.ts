@@ -10,6 +10,7 @@ import { ProductController } from './controllers/productController';
 import { CartController } from './controllers/cartController';
 import { OrderController } from './controllers/orderController';
 import { ShippingController } from './controllers/shippingController';
+import { PaymentController } from './controllers/paymentController';
 import { SiteController } from './controllers/siteController';
 import { Routes } from './routes/index.route';
 
@@ -29,6 +30,7 @@ const productController = new ProductController(productService);
 const cartController = new CartController(cartService);
 const orderController = new OrderController(orderService);
 const shippingController = new ShippingController(shippingService);
+const paymentController = new PaymentController(paymentService);
 const siteController = new SiteController(productService, cartService, orderService);
 
 app.locals.cartService = cartService;
@@ -38,7 +40,9 @@ const routes = new Routes(
   siteController,
   productController,
   cartController,
-  orderController
+  orderController,
+  shippingController,
+  paymentController
 );
 
 // Enregistrer les routes
