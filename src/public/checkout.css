@@ -1,0 +1,337 @@
+/* Styles pour la page de checkout */
+
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.checkout-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.checkout-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .checkout-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h3 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+
+.same-as-shipping {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.same-as-shipping label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.same-as-shipping input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.shipping-options,
+.payment-options {
+  margin-top: 20px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-item:hover {
+  background-color: #f0f7ff;
+}
+
+.option-item.selected {
+  border-color: #4a90e2;
+  background-color: #f0f7ff;
+}
+
+.option-item input[type="radio"] {
+  margin-right: 15px;
+}
+
+.option-details {
+  flex-grow: 1;
+}
+
+.option-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.option-description {
+  color: #666;
+  font-size: 14px;
+}
+
+.option-price {
+  font-weight: bold;
+  color: #333;
+  margin-left: 10px;
+}
+
+.cart-summary {
+  grid-column: span 2;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .cart-summary {
+    grid-column: span 1;
+  }
+}
+
+.cart-summary h3 {
+  margin-top: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.cart-items {
+  margin-bottom: 20px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item-name {
+  flex-grow: 1;
+}
+
+.cart-item-quantity {
+  margin: 0 20px;
+  color: #666;
+}
+
+.cart-item-price {
+  font-weight: bold;
+}
+
+.cart-totals {
+  margin-top: 20px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.cart-total-label {
+  font-weight: bold;
+}
+
+.cart-total-value {
+  font-weight: bold;
+}
+
+.grand-total {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #ddd;
+  font-size: 18px;
+}
+
+.checkout-actions {
+  grid-column: span 2;
+  margin-top: 30px;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .checkout-actions {
+    grid-column: span 1;
+  }
+}
+
+.btn-checkout {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-checkout:hover {
+  background-color: #45a049;
+}
+
+.btn-checkout:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Styles pour la page de confirmation de commande */
+.confirmation-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.confirmation-header h1 {
+  color: #4CAF50;
+}
+
+.confirmation-header p {
+  color: #666;
+  font-size: 18px;
+}
+
+.confirmation-details {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.confirmation-section {
+  margin-bottom: 20px;
+}
+
+.confirmation-section h3 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  color: #333;
+}
+
+.confirmation-section p {
+  margin: 5px 0;
+}
+
+.confirmation-section strong {
+  display: inline-block;
+  width: 150px;
+}
+
+.confirmation-items {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.confirmation-items th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 10px;
+}
+
+.confirmation-items td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.confirmation-totals {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.confirmation-total-row {
+  margin: 5px 0;
+}
+
+.confirmation-total-row.grand-total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #ddd;
+}
+
+.confirmation-actions {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn-continue-shopping {
+  background-color: #4a90e2;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-continue-shopping:hover {
+  background-color: #357abd;
+}

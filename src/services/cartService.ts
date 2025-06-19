@@ -29,6 +29,12 @@ export class CartService {
     return this.items;
   }
 
+  getTotal(): number {
+    // Cette méthode sera implémentée pour calculer le total du panier
+    // Pour l'instant, elle retourne 0 car elle nécessite le productService pour calculer le vrai total
+    return 0;
+  }
+
   clear(): void {
     this.items = [];
   }

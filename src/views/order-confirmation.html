@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmation de commande</title>
+  <link rel="stylesheet" href="/main.css" />
+  <link rel="stylesheet" href="/checkout.css" />
+</head>
+<body>
+  <div id="header-container"></div>
+  
+  <main class="confirmation-container">
+    <div class="confirmation-header">
+      <h1>Merci pour votre commande !</h1>
+      <p>Votre commande a été confirmée et est en cours de traitement.</p>
+      <p>Numéro de commande: <strong id="order-id"></strong></p>
+    </div>
+    
+    <div class="confirmation-details">
+      <div class="confirmation-section">
+        <h3>Détails de la commande</h3>
+        <p><strong>Date:</strong> <span id="order-date"></span></p>
+        <p><strong>Statut:</strong> <span id="order-status"></span></p>
+        <p><strong>Mode de paiement:</strong> <span id="payment-method"></span></p>
+      </div>
+      
+      <div class="confirmation-section">
+        <h3>Adresse de livraison</h3>
+        <div id="shipping-address"></div>
+      </div>
+      
+      <div class="confirmation-section">
+        <h3>Adresse de facturation</h3>
+        <div id="billing-address"></div>
+      </div>
+      
+      <div class="confirmation-section">
+        <h3>Articles commandés</h3>
+        <table class="confirmation-items">
+          <thead>
+            <tr>
+              <th>Produit</th>
+              <th>Prix unitaire</th>
+              <th>Quantité</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="order-items">
+            <!-- Les articles commandés seront ajoutés ici dynamiquement -->
+          </tbody>
+        </table>
+        
+        <div class="confirmation-totals">
+          <div class="confirmation-total-row">
+            <span>Sous-total:</span>
+            <span id="subtotal"></span>
+          </div>
+          <div class="confirmation-total-row">
+            <span>Frais de livraison:</span>
+            <span id="shipping-cost"></span>
+          </div>
+          <div class="confirmation-total-row grand-total">
+            <span>Total:</span>
+            <span id="total"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="confirmation-actions">
+      <a href="/" class="btn-continue-shopping">Continuer vos achats</a>
+    </div>
+  </main>
+  
+  <script src="/cart.js"></script>
+  <script src="/order-confirmation.js"></script>
+</body>
+</html>

@@ -1,24 +1,42 @@
+import { Repository } from 'typeorm';
+import { AppDataSource } from '../config/database';
+import { Order } from '../entities/Order';
+import { OrderItem } from '../entities/OrderItem';
 import { CartService } from './cartService';
 import { PaymentService } from './paymentService';
 import { ShippingService } from './shippingService';
 import { ProductService } from './productService';
-import { Order } from '../models/order';
-import { v4 as uuidv4 } from 'uuid';
 
 export class OrderService {
+  private orderRepository: Repository<Order>;
+  private orderItemRepository: Repository<OrderItem>;
+
   constructor(
     private cartService: CartService,
     private paymentService: PaymentService,
     private shippingService: ShippingService,
     private productService: ProductService
-  ) {}
+  ) {
+    this.orderRepository = AppDataSource.getRepository(Order);
+    this.orderItemRepository = AppDataSource.getRepository(OrderItem);
+  }
 
   getCartItems() {
     return this.cartService.getItems();
   }
 
-  async createOrder(shippingMethod: string): Promise<Order> {
+  async createOrder(orderData: {
+    customerId: number;
+    carrierId: string;
+    paymentMethod: string;
+    shippingAddressId: number;
+    billingAddressId: number;
+  }): Promise<Order> {
     const items = this.cartService.getItems();
+    
+    if (items.length === 0) {
+      throw new Error('Cannot create order with empty cart');
+    }
     
     // Calculer le total des articles de manière asynchrone
     let itemsTotal = 0;
@@ -29,27 +47,74 @@ export class OrderService {
       }
     }
 
-    const shippingCost = this.shippingService.getCost(shippingMethod);
+    const shippingCost = this.shippingService.getCost(orderData.carrierId);
     const total = itemsTotal + shippingCost;
 
-    const order: Order = {
-      id: uuidv4(),
-      items,
-      shippingMethod,
+    // Create order in database
+    const order = this.orderRepository.create({
+      ...orderData,
       shippingCost,
       total,
       status: 'pending'
-    };
-    const paymentSuccess = await this.paymentService.processPayment(
-      order.id,
-      order.total
-    );
-    if (paymentSuccess) {
-      order.status = 'paid';
-      await this.shippingService.shipOrder(order.id, shippingMethod);
-      order.status = 'shipped';
+    });
+
+    const savedOrder = await this.orderRepository.save(order);
+
+    // Create order items
+    for (const item of items) {
+      const product = await this.productService.findById(item.productId);
+      if (!product) continue;
+
+      const orderItem = this.orderItemRepository.create({
+        orderId: savedOrder.id,
+        productId: item.productId,
+        quantity: item.quantity,
+        price: product.price
+      });
+
+      await this.orderItemRepository.save(orderItem);
     }
+
+    // Process payment
+    const paymentSuccess = await this.paymentService.processPayment(
+      savedOrder.id.toString(),
+      savedOrder.total
+    );
+    
+    if (paymentSuccess) {
+      savedOrder.status = 'paid';
+      await this.orderRepository.save(savedOrder);
+      
+      // Ship order
+      await this.shippingService.shipOrder(savedOrder.id.toString(), orderData.carrierId);
+      savedOrder.status = 'shipped';
+      await this.orderRepository.save(savedOrder);
+    }
+    
+    // Clear cart
     this.cartService.clear();
+    
+    return this.getOrderWithItems(savedOrder.id);
+  }
+  
+  async getOrderWithItems(orderId: number): Promise<Order> {
+    const order = await this.orderRepository.findOne({
+      where: { id: orderId },
+      relations: ['items']
+    });
+
+    if (!order) {
+      throw new Error(`Order with ID ${orderId} not found`);
+    }
+
     return order;
+  }
+
+  async getCustomerOrders(customerId: number): Promise<Order[]> {
+    return this.orderRepository.find({
+      where: { customerId },
+      relations: ['items'],
+      order: { createdAt: 'DESC' }
+    });
   }
 }
