@@ -23,6 +23,9 @@ async function loadProductDetails() {
   
   try {
     const response = await fetch(`/api/products/${id}`);
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status}`);
+    }
     const product = await response.json();
     
     // Créer la structure HTML pour les détails du produit
@@ -76,7 +79,7 @@ function getStockDisplay(stock) {
   if (stock === undefined) return '<p class="stock-high">En stock</p>';
   
   if (stock > 10) {
-    return `<p class="stock-high">En stock</p>`;
+    return `<p class="stock-high">${stock} en stock</p>`;
   } else if (stock > 3) {
     return `<p class="stock-medium">${stock} en stock</p>`;
   } else if (stock > 0) {

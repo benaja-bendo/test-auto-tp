@@ -73,6 +73,12 @@ export class OrderService {
       });
 
       await this.orderItemRepository.save(orderItem);
+      
+      // Mettre à jour le stock du produit
+      if (product.stock !== undefined) {
+        const newStock = Math.max(0, product.stock - item.quantity);
+        await this.productService.updateProduct(item.productId, { stock: newStock });
+      }
     }
 
     // Process payment

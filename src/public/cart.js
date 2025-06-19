@@ -41,7 +41,7 @@ class CartManager {
         this.saveCart();
 
         // Synchroniser avec le serveur
-        fetch('/cart/items', {
+        fetch('/api/cart/items', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -86,27 +86,54 @@ class CartManager {
 
   // Mettre à jour la quantité d'un produit
   updateQuantity(productId, quantity) {
-    const item = this.cartItems.find(item => item.productId === productId);
-    if (item) {
-      item.quantity = quantity;
-      if (item.quantity <= 0) {
-        this.removeItem(productId);
+    // Vérifier d'abord le stock disponible
+    this.checkStock(productId, quantity).then(available => {
+      if (available) {
+        const item = this.cartItems.find(item => item.productId === productId);
+        if (item) {
+          item.quantity = quantity;
+          if (item.quantity <= 0) {
+            this.removeItem(productId);
+          } else {
+            this.saveCart();
+          }
+        }
       } else {
-        this.saveCart();
+        alert('Stock insuffisant pour ce produit');
+        // Recharger les articles du panier pour afficher la quantité maximale disponible
+        if (typeof loadCartItems === 'function') {
+          loadCartItems();
+        }
       }
-    }
+    });
   }
 
   // Supprimer un produit du panier
   removeItem(productId) {
     this.cartItems = this.cartItems.filter(item => item.productId !== productId);
     this.saveCart();
+    
+    // Synchroniser avec le serveur
+    fetch(`/api/cart/items/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).catch(error => console.error('Error removing item from server cart:', error));
   }
 
   // Vider le panier
   clearCart() {
     this.cartItems = [];
     this.saveCart();
+    
+    // Synchroniser avec le serveur
+    fetch('/api/cart/clear', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).catch(error => console.error('Error clearing cart on server:', error));
   }
 }
 
