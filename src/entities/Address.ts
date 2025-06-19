@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Customer } from './Customer';
 
 @Entity('addresses')
@@ -6,34 +14,53 @@ export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'int' })
   customerId: number;
 
-  @ManyToOne(() => Customer, customer => customer.addresses)
+  @ManyToOne(() => Customer, (customer) => customer.addresses)
   @JoinColumn({ name: 'customerId' })
   customer: Customer;
 
   @Column({
     type: 'varchar',
-    enum: ['billing', 'shipping']
+    enum: ['billing', 'shipping'],
   })
   type: 'billing' | 'shipping';
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   street: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   city: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   postalCode: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   country: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 }

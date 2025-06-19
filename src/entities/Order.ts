@@ -1,29 +1,50 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Customer } from './Customer';
 import { OrderItem } from './OrderItem';
 
 @Entity('orders')
 export class Order {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    type: 'int',
+  })
   id: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+  })
   customerId: number;
 
-  @ManyToOne(() => Customer, customer => customer.orders)
+  @ManyToOne(() => Customer, (customer) => customer.orders)
   @JoinColumn({ name: 'customerId' })
   customer: Customer;
 
-  @Column()
+  @Column({
+    type: 'int',
+  })
   carrierId: string;
 
-  @Column()
+  @Column({
+    type: 'int',
+  })
   paymentMethod: string;
 
-  @Column()
+  @Column({
+    type: 'int',
+  })
   shippingAddressId: number;
 
-  @Column()
+  @Column({
+    type: 'int',
+  })
   billingAddressId: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
@@ -34,16 +55,23 @@ export class Order {
 
   @Column({
     type: 'varchar',
-    default: 'pending'
+    default: 'pending',
   })
   status: 'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled';
 
-  @OneToMany(() => OrderItem, orderItem => orderItem.order)
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
   items: OrderItem[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 }

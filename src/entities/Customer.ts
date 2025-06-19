@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Address } from './Address';
 import { Order } from './Order';
 
@@ -7,27 +14,48 @@ export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   firstName: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 255,
+  })
   lastName: string;
 
-  @Column({ unique: true })
+  @Column({
+    type: 'varchar',
+    length: 255,
+    unique: true,
+  })
   email: string;
 
-  @Column({ nullable: true })
+  @Column({
+    type: 'varchar',
+    length: 255,
+    nullable: true,
+  })
   phone: string;
 
-  @OneToMany(() => Address, address => address.customer)
+  @OneToMany(() => Address, (address) => address.customer)
   addresses: Address[];
 
-  @OneToMany(() => Order, order => order.customer)
+  @OneToMany(() => Order, (order) => order.customer)
   orders: Order[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    type: 'datetime',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
   updatedAt: Date;
 }
