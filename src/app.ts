@@ -13,8 +13,16 @@ import { ShippingController } from './controllers/shippingController';
 import { PaymentController } from './controllers/paymentController';
 import { SiteController } from './controllers/siteController';
 import { Routes } from './routes/index.route';
+import { errorHandler } from './middlewares/error.middleware';
+import { httpLogger } from './middlewares/logger.middleware';
+import logger from './config/logger';
 
 const app = express();
+
+// Middleware de logging HTTP
+app.use(httpLogger);
+
+// Middlewares de parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,5 +55,11 @@ const routes = new Routes(
 
 // Enregistrer les routes
 app.use(routes.init());
+
+// Middleware de gestion d'erreurs (doit être après les routes)
+app.use(errorHandler);
+
+// Log de démarrage de l'application
+logger.info('Application initialisée avec succès');
 
 export default app;
