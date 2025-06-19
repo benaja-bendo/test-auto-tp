@@ -37,7 +37,10 @@ class App {
       console.log('Database connection initialized');
     } catch (error) {
       console.error('Error initializing database connection:', error);
-      process.exit(1);
+      // Ne pas quitter le processus pendant les tests
+      if (process.env.NODE_ENV !== 'test') {
+        process.exit(1);
+      }
     }
   }
   
@@ -56,7 +59,7 @@ class App {
   private initializeServices(): void {
     // Initialize services
     const productService = new ProductService();
-    const cartService = new CartService();
+    const cartService = new CartService(productService); // Injecter ProductService dans CartService
     const shippingService = new ShippingService();
     const paymentService = new PaymentService();
     const customerService = new CustomerService();

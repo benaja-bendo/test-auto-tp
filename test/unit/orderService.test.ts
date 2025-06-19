@@ -19,7 +19,13 @@ describe('OrderService', () => {
       shipOrder: vi.fn().mockResolvedValue(undefined),
       getCost: vi.fn().mockReturnValue(5)
     } as unknown as ShippingService;
-    productService = new ProductService();
+    
+    // Mock du ProductService pour retourner un produit avec un prix
+    productService = {
+      findById: vi.fn().mockResolvedValue({ id: '1', name: 'Test Product', price: 10, stock: 5 }),
+      updateProduct: vi.fn().mockResolvedValue({ id: '1', name: 'Test Product', price: 10, stock: 4 })
+    } as unknown as ProductService;
+    
     service = new OrderService(cart, payment, shipping, productService);
   });
 

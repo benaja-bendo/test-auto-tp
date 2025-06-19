@@ -92,6 +92,10 @@ describe('API Integration Tests', () => {
       expect(orderRes.status).toBe(201);
       expect(orderRes.body.shippingCost).toBe(5);
       expect(orderRes.body.status).toBe('shipped');
+      
+      // En mode test, nous savons que le prix du produit 1 est 10
+      const expectedTotal = 10 + 5; // prix du produit + frais d'expédition
+      expect(orderRes.body.total).toBe(expectedTotal);
     });
 
     it('vérifie que le panier est vide après une commande réussie', async () => {
@@ -121,6 +125,12 @@ describe('API Integration Tests', () => {
         .send({ shippingMethod: 'standard' });
 
       expect(orderRes.status).toBe(201);
+      
+      // En mode test, nous savons que les prix sont fixes (10 pour le produit 1, 20 pour le produit 2)
+      const expectedItemsTotal = 2 * 10 + 1 * 20; // 2 * prix du produit 1 + 1 * prix du produit 2
+      const expectedTotal = expectedItemsTotal + orderRes.body.shippingCost;
+      
+      expect(orderRes.body.total).toBe(expectedTotal);
       expect(orderRes.body.total).toBeGreaterThan(orderRes.body.shippingCost);
     });
   });
