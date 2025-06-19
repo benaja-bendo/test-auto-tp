@@ -7,7 +7,9 @@ import { Customer } from '../entities/Customer';
 import { Address } from '../entities/Address';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.join(__dirname, '../../db/ecommerce.sqlite');
+const dbPath = process.env.NODE_ENV === 'test'
+  ? ':memory:'
+  : path.join(__dirname, '../../db/ecommerce.sqlite');
 
 export const AppDataSource = new DataSource({
   type: 'sqlite',
