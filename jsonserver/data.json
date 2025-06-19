@@ -7,12 +7,12 @@
       "description_long": "Ce t-shirt blanc en coton 100% biologique offre une sensation douce et confortable. Un basique indispensable pour un style décontracté et éco-responsable.",
       "price": 25,
       "currency": "EUR",
-      "stock": 170,
+      "stock": 169,
       "category": "t-shirt",
       "weight": 200,
       "images": [
-        "https://example.com/images/tshirt_bio_blanc_1.jpg",
-        "https://example.com/images/tshirt_bio_blanc_2.jpg"
+        "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS0Jat5zdWaOVtpsxO1STy_m6-w9Szwm8wpVduAktB1ce5n54jXttbnq8SKYHUYYTQiii_B7mK0Ij1L9S_olADqBnWrClsCLZnnk4EqxFPZFh-bNN8j3Fwi7RKjBWWTjuS8pqfTj1ncu9Q&usqp=CAc",
+        "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS0Jat5zdWaOVtpsxO1STy_m6-w9Szwm8wpVduAktB1ce5n54jXttbnq8SKYHUYYTQiii_B7mK0Ij1L9S_olADqBnWrClsCLZnnk4EqxFPZFh-bNN8j3Fwi7RKjBWWTjuS8pqfTj1ncu9Q&usqp=CAc"
       ]
     },
     {
@@ -26,8 +26,8 @@
       "category": "t-shirt",
       "weight": 200,
       "images": [
-        "https://example.com/images/tshirt_voyage_1.jpg",
-        "https://example.com/images/tshirt_voyage_2.jpg"
+        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSRAf2MOntZ2QqCkoHO4QKFW9NV12p1jcPJTK0jBAzkAcpt3o2uv-3w_CjBxQUZxi89W9PM0oL4HEvq957eHK85RDtNgzDy_hw0r4JxYTM1F_iIMJhq9krPH_c19QtZHvk7BOneS4lJZUc&usqp=CAc",
+        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSRAf2MOntZ2QqCkoHO4QKFW9NV12p1jcPJTK0jBAzkAcpt3o2uv-3w_CjBxQUZxi89W9PM0oL4HEvq957eHK85RDtNgzDy_hw0r4JxYTM1F_iIMJhq9krPH_c19QtZHvk7BOneS4lJZUc&usqp=CAc"
       ]
     },
     {
@@ -41,8 +41,8 @@
       "category": "t-shirt",
       "weight": 200,
       "images": [
-        "https://example.com/images/tshirt_rayures_marines_1.jpg",
-        "https://example.com/images/tshirt_rayures_marines_2.jpg"
+        "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTsHH50eL2Op5O0ckbYFrrJve0tWlt8dhzmd9Oq4y3ltoMhykuREIjoB9AA1POzLlpLto0x-UTG5s09jU3YjhsJySKaiNnaiKwnh6jb0kgHeORqc90GKNOA8Az40LT5Rr7mEGfhw0DWhmk&usqp=CAc",
+        "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQQX7soyIjgT6aMH9EqMcgGlvWpt80v2DSqsuks1yCcr3B6EqybQVg2DiDpKZ9S-pGSlg2QUTZQeHHWkidfkDpO_tbTJFI6JZwfw8yNcyFReZqAcWvDJpVWM0XhtGsMuIZ3fln7aEy_tA&usqp=CAc"
       ]
     },
     {
@@ -71,7 +71,7 @@
       "category": "t-shirt",
       "weight": 200,
       "images": [
-        "https://example.com/images/tshirt_sport_1.jpg",
+        "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTkohk-1KkRiEZnUJLcCewYll3qV5Pqu3COCp4lyd80SSla5KhoCKaRTEsG43C0NOgdwsqjpLu9e2DXa8K3RXh6SpMLVZsmasaPhH-xk1BWNJW-dSDleO0rPtcmVy9K0yOuYEZAJE63&usqp=CAc",
         "https://example.com/images/tshirt_sport_2.jpg"
       ]
     },
@@ -97,7 +97,7 @@
       "description_long": "Adoptez un style vintage avec ce t-shirt noir au traitement délavé. Sa texture douce et son aspect vieilli en font un vêtement au caractère unique.",
       "price": 28.5,
       "currency": "EUR",
-      "stock": 90,
+      "stock": 2,
       "category": "t-shirt",
       "weight": 200,
       "images": [
@@ -176,8 +176,8 @@
       "category": "t-shirt",
       "weight": 200,
       "images": [
-        "https://i.imgur.com/9VHkGqT.jpg",
-        "https://i.imgur.com/2X3bN6Q.jpg"
+        "https://example.com/images/tshirt_henley_1.jpg",
+        "https://example.com/images/tshirt_henley_2.jpg"
       ]
     },
     {
@@ -616,21 +616,6 @@
       ]
     },
     {
-      "id": "5d6e7f8a-9b0c-1d2e-3f4a-5b6c7d8e9f0a",
-      "name": "Jean Noir Ajusté",
-      "description_short": "Un basique polyvalent pour tous les looks.",
-      "description_long": "Ce jean noir ajusté est un essentiel de votre garde-robe. Facile à combiner, il s'adapte à toutes les occasions, du casual au chic.",
-      "price": 69,
-      "currency": "EUR",
-      "stock": 140,
-      "category": "pantalon",
-      "weight": 350,
-      "images": [
-        "https://example.com/images/jean_noir_ajuste_1.jpg",
-        "https://example.com/images/jean_noir_ajuste_2.jpg"
-      ]
-    },
-    {
       "id": "7f8a9b0c-1d2e-3f4a-5b6c-7d8e9f0a1b2c",
       "name": "Pantalon de Randonnée Résistant Bleu",
       "description_short": "Durabilité et confort pour l'extérieur.",
@@ -676,21 +661,6 @@
       ]
     },
     {
-      "id": "3b4c5d6e-7f8a-9b0c-1d2e-3f4a5b6c7d8e",
-      "name": "Pantalon Ample Fluide Noir",
-      "description_short": "Confort et fluidité pour un style décontracté.",
-      "description_long": "Ce pantalon ample et fluide en tissu léger est parfait pour un look élégant et décontracté, idéal pour les journées chaudes ou les soirées.",
-      "price": 52,
-      "currency": "EUR",
-      "stock": 105,
-      "category": "pantalon",
-      "weight": 350,
-      "images": [
-        "https://example.com/images/ample_fluide_noir_1.jpg",
-        "https://example.com/images/ample_fluide_noir_2.jpg"
-      ]
-    },
-    {
       "id": "5d6e7f8a-9b0c-1d2e-3f4a-5b6c7d8e9f0a",
       "name": "Jean Skinny Taille Haute Bleu Foncé",
       "description_short": "Maintien et silhouette élancée.",
@@ -703,36 +673,6 @@
       "images": [
         "https://example.com/images/jean_skinny_taille_haute_1.jpg",
         "https://example.com/images/jean_skinny_taille_haute_2.jpg"
-      ]
-    },
-    {
-      "id": "7f8a9b0c-1d2e-3f4a-5b6c-7d8e9f0a1b2c",
-      "name": "Pantalon Chino Blanc Cassé",
-      "description_short": "Idéal pour un look estival chic.",
-      "description_long": "Un chino blanc cassé, parfait pour les beaux jours. Sa coupe ajustée et sa couleur claire apportent une touche de fraîcheur à votre style.",
-      "price": 59.99,
-      "currency": "EUR",
-      "stock": 130,
-      "category": "pantalon",
-      "weight": 350,
-      "images": [
-        "https://example.com/images/chino_blanc_casse_1.jpg",
-        "https://example.com/images/chino_blanc_casse_2.jpg"
-      ]
-    },
-    {
-      "id": "9b0c1d2e-3f4a-5b6c-7d8e-9f0a1b2c3d4e",
-      "name": "Pantalon de Pyjama Coton Rayé",
-      "description_short": "Douceur et détente pour la nuit.",
-      "description_long": "Ce pantalon de pyjama en coton doux et respirant est parfait pour des nuits confortables. Son motif rayé ajoute une touche classique.",
-      "price": 28,
-      "currency": "EUR",
-      "stock": 170,
-      "category": "pantalon",
-      "weight": 350,
-      "images": [
-        "https://example.com/images/pyjama_raye_1.jpg",
-        "https://example.com/images/pyjama_raye_2.jpg"
       ]
     },
     {
@@ -808,21 +748,6 @@
       "images": [
         "https://example.com/images/soie_rose_1.jpg",
         "https://example.com/images/soie_rose_2.jpg"
-      ]
-    },
-    {
-      "id": "1d2e3f4a-5b6c-7d8e-9f0a-1b2c3d4e5f6g",
-      "name": "Jean Wide Leg Brut",
-      "description_short": "Coupe large et intemporelle pour un style décontracté.",
-      "description_long": "Le jean wide leg brut offre une silhouette décontractée et confortable. Sa coupe large est parfaite pour un look tendance et rétro.",
-      "price": 85,
-      "currency": "EUR",
-      "stock": 70,
-      "category": "pantalon",
-      "weight": 350,
-      "images": [
-        "https://example.com/images/jean_wide_leg_1.jpg",
-        "https://example.com/images/jean_wide_leg_2.jpg"
       ]
     },
     {

@@ -1,11 +1,21 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CartService } from '../../src/services/cartService';
+import { ProductService } from '../../src/services/productService';
 
 describe('CartService', () => {
   let service: CartService;
+  let mockProductService: ProductService;
 
   beforeEach(() => {
-    service = new CartService();
+    // Créer un mock du ProductService
+    mockProductService = {
+      findById: vi.fn().mockResolvedValue({ id: '1', price: 10 }),
+      getAll: vi.fn(),
+      fetchAll: vi.fn(),
+      updateProduct: vi.fn()
+    } as unknown as ProductService;
+    
+    service = new CartService(mockProductService);
   });
 
   it('ajoute des articles au panier', () => {
@@ -46,5 +56,20 @@ describe('CartService', () => {
 
   it('retourne un tableau vide pour un nouveau panier', () => {
     expect(service.getItems()).toEqual([]);
+  });
+
+  it('calcule correctement le total du panier', async () => {
+    // Configurer le mock pour retourner différents produits
+    mockProductService.findById = vi.fn().mockImplementation(async (id) => {
+      if (id === '1') return { id: '1', price: 10 };
+      if (id === '2') return { id: '2', price: 20 };
+      return null;
+    });
+
+    service.addItem('1', 2); // 2 * 10 = 20
+    service.addItem('2', 1); // 1 * 20 = 20
+    
+    const total = await service.getTotal();
+    expect(total).toBe(40); // 20 + 20 = 40
   });
 });

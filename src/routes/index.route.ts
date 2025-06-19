@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { SiteController } from '../controllers/siteController';
 import { ProductController } from '../controllers/productController';
 import { CartController } from '../controllers/cartController';
+import { SiteController } from '../controllers/siteController';
 import { OrderController } from '../controllers/orderController';
 import { ShippingController } from '../controllers/shippingController';
 import { PaymentController } from '../controllers/paymentController';
+import { CustomerController } from '../controllers/customerController';
 
 export class Routes {
   constructor(
@@ -13,7 +14,8 @@ export class Routes {
     private cartController: CartController,
     private orderController: OrderController,
     private shippingController: ShippingController,
-    private paymentController: PaymentController
+    private paymentController: PaymentController,
+    private customerController: CustomerController
   ) {}
 
   public init(): Router {
@@ -21,11 +23,10 @@ export class Routes {
 
     // Site routes
     router.get('/', this.siteController.home);
-    router.get('/products/:id', this.siteController.productPage);
+    router.get('/product/:id', this.siteController.productPage);
     router.get('/cart', this.siteController.cartPage);
-    router.post('/checkout', this.siteController.checkout);
-    
-    // Partials routes
+    router.get('/checkout', this.siteController.checkout);
+    router.get('/order-confirmation/:orderId', this.siteController.orderConfirmation);
     router.get('/views/partials/:name', this.siteController.servePartial);
 
     // API routes
@@ -48,11 +49,15 @@ export class Routes {
     router.delete('/api/cart/items/:productId', this.cartController.removeItem);
     router.post('/api/cart/clear', this.cartController.clearCart);
 
+    // Customer routes
+    router.post('/api/customers', this.customerController.createCustomer.bind(this.customerController));
+    router.post('/api/customers/:customerId/addresses', this.customerController.addAddress.bind(this.customerController));
+    router.get('/api/customers/:customerId/addresses', this.customerController.getCustomerAddresses.bind(this.customerController));
+    
     // Order routes
-    router.post('/api/orders', this.orderController.createOrder);
-
-    // Order routes
-    router.post('/api/orders', this.orderController.createOrder);
+    router.post('/api/orders', this.orderController.createOrder.bind(this.orderController));
+    router.get('/api/customers/:customerId/orders', this.orderController.getCustomerOrders.bind(this.orderController));
+    router.get('/api/orders/:orderId', this.orderController.getOrderDetails.bind(this.orderController));
 
     return router;
   }

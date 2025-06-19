@@ -1,4 +1,5 @@
-import express from 'express';
+import 'reflect-metadata';
+import express, { Application } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { ProductService } from './services/productService';
@@ -16,50 +17,96 @@ import { Routes } from './routes/index.route';
 import { errorHandler } from './middlewares/error.middleware';
 import { httpLogger } from './middlewares/logger.middleware';
 import logger from './config/logger';
+import { CustomerService } from './services/customerService';
+import { CustomerController } from './controllers/customerController';
+import { AppDataSource } from './config/database';
 
-const app = express();
+class App {
+  public app: Application;
 
-// Middleware de logging HTTP
-app.use(httpLogger);
+  constructor() {
+    this.app = express();
+    this.config();
+    this.initializeDatabase();
+    this.initializeServices();
+  }
+  
+  private async initializeDatabase(): Promise<void> {
+    try {
+      await AppDataSource.initialize();
+      console.log('Database connection initialized');
+    } catch (error) {
+      console.error('Error initializing database connection:', error);
+      // Ne pas quitter le processus pendant les tests
+      if (process.env.NODE_ENV !== 'test') {
+        process.exit(1);
+      }
+    }
+  }
+  
+  private config(): void {
+    // Middleware de logging HTTP
+    this.app.use(httpLogger);
 
-// Middlewares de parsing
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+    // Middlewares de parsing
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.join(__dirname, 'public')));
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+    this.app.use(express.static(path.join(__dirname, 'public')));
+  }
 
-const productService = new ProductService();
-const cartService = new CartService();
-const paymentService = new PaymentService();
-const shippingService = new ShippingService();
-const orderService = new OrderService(cartService, paymentService, shippingService, productService);
-const productController = new ProductController(productService);
-const cartController = new CartController(cartService, productService);
-const orderController = new OrderController(orderService);
-const shippingController = new ShippingController(shippingService);
-const paymentController = new PaymentController(paymentService);
-const siteController = new SiteController(productService, cartService, orderService);
+  private initializeServices(): void {
+    // Initialize services
+    const productService = new ProductService();
+    const cartService = new CartService(productService); // Injecter ProductService dans CartService
+    const shippingService = new ShippingService();
+    const paymentService = new PaymentService();
+    const customerService = new CustomerService();
+    const orderService = new OrderService(
+      cartService,
+      paymentService,
+      shippingService,
+      productService
+    );
 
-app.locals.cartService = cartService;
+    // Initialize controllers
+    const productController = new ProductController(productService);
+    const cartController = new CartController(cartService, productService);
+    const siteController = new SiteController(
+      productService,
+      cartService,
+      orderService,
+      shippingService,
+      paymentService
+    );
+    const orderController = new OrderController(orderService);
+    const shippingController = new ShippingController(shippingService);
+    const paymentController = new PaymentController(paymentService);
+    const customerController = new CustomerController(customerService);
 
-// Initialiser les routes
-const routes = new Routes(
-  siteController,
-  productController,
-  cartController,
-  orderController,
-  shippingController,
-  paymentController
-);
+    this.app.locals.cartService = cartService;
 
-// Enregistrer les routes
-app.use(routes.init());
+    // Initialize routes
+    const routes = new Routes(
+      siteController,
+      productController,
+      cartController,
+      orderController,
+      shippingController,
+      paymentController,
+      customerController
+    );
 
-// Middleware de gestion d'erreurs (doit être après les routes)
-app.use(errorHandler);
+    // Enregistrer les routes
+    this.app.use(routes.init());
 
-// Log de démarrage de l'application
-logger.info('Application initialisée avec succès');
+    // Middleware de gestion d'erreurs (doit être après les routes)
+    this.app.use(errorHandler);
 
-export default app;
+    // Log de démarrage de l'application
+    logger.info('Application initialisée avec succès');
+  }
+}
+
+export default new App().app;

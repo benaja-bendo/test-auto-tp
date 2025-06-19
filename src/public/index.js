@@ -125,6 +125,7 @@ function displayProducts() {
     if (product.stock !== undefined) {
       if (product.stock > 10) {
         stockClass = 'stock-high';
+        stockText = `${product.stock} en stock`;
       } else if (product.stock > 3) {
         stockClass = 'stock-medium';
         stockText = `${product.stock} en stock`;
@@ -138,7 +139,7 @@ function displayProducts() {
     }
     
     productCard.innerHTML = `
-      <a href="/products/${product.id}">
+      <a href="/product/${product.id}">
         ${product.images && product.images.length > 0 ? 
           `<img src="${product.images[0]}" alt="${product.name}" class="product-image">` : 
           '<div class="product-image-placeholder"></div>'}

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cartManager.clearCart();
         loadCartItems();
         // Envoyer une requête au serveur pour vider le panier
-        fetch('/cart/clear', {
+        fetch('/api/cart/clear', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ async function loadCartItems() {
               `<img src="${product.images[0]}" alt="${product.name}" class="cart-product-image" style="width: 50px; height: 50px; object-fit: cover;">` : 
               ''}
             <div>
-              <a href="/products/${product.id}">${product.name}</a>
+              <a href="/product/${product.id}">${product.name}</a>
               ${product.description_short ? `<p class="product-description">${product.description_short}</p>` : ''}
             </div>
           </div>
@@ -106,13 +106,13 @@ async function loadCartItems() {
 
   // Mettre à jour le total du panier
   cartTotalAmount.textContent = cartTotal.toFixed(2);
-
-  // Ajouter des gestionnaires d'événements pour les boutons de quantité
-  addQuantityEventListeners();
+  
+  // Ajouter les gestionnaires d'événements pour les boutons de quantité et de suppression
+  addQuantityButtonListeners();
 }
 
-// Fonction pour ajouter des gestionnaires d'événements aux boutons de quantité
-function addQuantityEventListeners() {
+// Fonction pour ajouter des gestionnaires d'événements aux boutons de quantité et de suppression
+function addQuantityButtonListeners() {
   // Gestionnaire pour les boutons de diminution de quantité
   document.querySelectorAll('.quantity-btn.decrease').forEach(button => {
     button.addEventListener('click', function() {
@@ -179,7 +179,7 @@ function updateCartItemQuantity(productId, quantity) {
   updateCartTotals();
   
   // Synchroniser avec le serveur
-  fetch('/cart/items', {
+  fetch('/api/cart/items', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finaliser la commande</title>
+  <link rel="stylesheet" href="/main.css" />
+  <link rel="stylesheet" href="/checkout.css" />
+</head>
+<body>
+  <div id="header-container"></div>
+  
+  <main class="checkout-container">
+    <h1 class="checkout-title">Finaliser votre commande</h1>
+    
+    <form id="checkout-form" class="checkout-form">
+      <!-- Informations client -->
+      <div class="form-section">
+        <h3>Informations personnelles</h3>
+        <div class="form-group">
+          <label for="firstName">Prénom *</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Nom *</label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Téléphone *</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+      </div>
+      
+      <!-- Adresse de livraison -->
+      <div class="form-section">
+        <h3>Adresse de livraison</h3>
+        <div class="form-group">
+          <label for="shippingStreet">Rue *</label>
+          <input type="text" id="shippingStreet" name="shippingStreet" required>
+        </div>
+        <div class="form-group">
+          <label for="shippingCity">Ville *</label>
+          <input type="text" id="shippingCity" name="shippingCity" required>
+        </div>
+        <div class="form-group">
+          <label for="shippingPostalCode">Code postal *</label>
+          <input type="text" id="shippingPostalCode" name="shippingPostalCode" required>
+        </div>
+        <div class="form-group">
+          <label for="shippingCountry">Pays *</label>
+          <input type="text" id="shippingCountry" name="shippingCountry" required>
+        </div>
+        
+        <div class="same-as-shipping">
+          <label>
+            <input type="checkbox" id="sameAsShipping" name="sameAsShipping">
+            L'adresse de facturation est identique à l'adresse de livraison
+          </label>
+        </div>
+      </div>
+      
+      <!-- Adresse de facturation -->
+      <div class="form-section" id="billing-address-fields">
+        <h3>Adresse de facturation</h3>
+        <div class="form-group">
+          <label for="billingStreet">Rue *</label>
+          <input type="text" id="billingStreet" name="billingStreet" required>
+        </div>
+        <div class="form-group">
+          <label for="billingCity">Ville *</label>
+          <input type="text" id="billingCity" name="billingCity" required>
+        </div>
+        <div class="form-group">
+          <label for="billingPostalCode">Code postal *</label>
+          <input type="text" id="billingPostalCode" name="billingPostalCode" required>
+        </div>
+        <div class="form-group">
+          <label for="billingCountry">Pays *</label>
+          <input type="text" id="billingCountry" name="billingCountry" required>
+        </div>
+      </div>
+      
+      <!-- Options de livraison -->
+      <div class="form-section">
+        <h3>Méthode de livraison</h3>
+        <div class="shipping-options" id="shipping-options">
+          <!-- Les options de livraison seront ajoutées ici dynamiquement -->
+        </div>
+      </div>
+      
+      <!-- Options de paiement -->
+      <div class="form-section">
+        <h3>Méthode de paiement</h3>
+        <div class="payment-options" id="payment-options">
+          <!-- Les options de paiement seront ajoutées ici dynamiquement -->
+        </div>
+      </div>
+      
+      <!-- Résumé du panier -->
+      <div class="cart-summary">
+        <h3>Résumé de votre commande</h3>
+        <div class="cart-items" id="cart-items-summary">
+          <!-- Les articles du panier seront ajoutés ici dynamiquement -->
+        </div>
+        <div class="cart-totals" id="cart-totals">
+          <!-- Les totaux seront ajoutés ici dynamiquement -->
+        </div>
+      </div>
+      
+      <!-- Actions -->
+      <div class="checkout-actions">
+        <button type="submit" class="btn-checkout">Confirmer la commande</button>
+      </div>
+    </form>
+  </main>
+  
+  <script src="/cart.js"></script>
+  <script src="/checkout.js"></script>
+</body>
+</html>
