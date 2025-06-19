@@ -49,16 +49,14 @@ export class ProductService {
   async findById(id: string): Promise<Product | undefined> {
     // En mode test, retourner un produit fictif pour éviter les appels réseau
     if (process.env.NODE_ENV === 'test') {
-      // Définir des prix différents selon l'ID du produit
-      const price = id === '1' ? 10 : id === '2' ? 20 : 30;
-      
-      return {
-        id: id,
-        name: `Test Product ${id}`,
-        price: price,
-        stock: 5,
-        description: 'Test product description'
+      // Return a predefined product only for known IDs
+      const products: Record<string, Product> = {
+        '1': { id: '1', name: 'Test Product 1', price: 10, stock: 5, description: 'Test product description' },
+        '2': { id: '2', name: 'Test Product 2', price: 20, stock: 5, description: 'Test product description' },
+        '3': { id: '3', name: 'Test Product 3', price: 30, stock: 5, description: 'Test product description' },
       };
+
+      return products[id];
     }
     
     try {

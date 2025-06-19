@@ -33,8 +33,10 @@ class App {
   
   private async initializeDatabase(): Promise<void> {
     try {
-      await AppDataSource.initialize();
-      console.log('Database connection initialized');
+      if (!AppDataSource.isInitialized) {
+        await AppDataSource.initialize();
+        console.log('Database connection initialized');
+      }
     } catch (error) {
       console.error('Error initializing database connection:', error);
       // Ne pas quitter le processus pendant les tests

@@ -51,6 +51,15 @@ export class OrderController {
       res.status(201).json(order);
     } catch (error) {
       console.error('Erreur lors de la création de la commande:', error);
+
+      if (
+        error instanceof Error &&
+        error.message === 'Cannot create order with empty cart'
+      ) {
+        res.status(400).json({ error: error.message });
+        return;
+      }
+
       res.status(500).json({ error: 'Échec de la création de la commande' });
     }
   }
